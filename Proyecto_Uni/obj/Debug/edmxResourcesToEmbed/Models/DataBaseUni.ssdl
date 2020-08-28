@@ -1,0 +1,259 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ProyectoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Carrera">
+    <Key>
+      <PropertyRef Name="CarreraId" />
+    </Key>
+    <Property Name="CarreraId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="FacultadId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Carrera" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Clases">
+    <Key>
+      <PropertyRef Name="ClaseId" />
+    </Key>
+    <Property Name="ClaseId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Clase" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="CarreraId" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ClasesEstudiante">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ClaseId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="EstudianteId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="CreadoPorUsuarioId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ModificadoPorUsuarioId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="FechaDeCreacion" Type="datetime" Nullable="false" />
+    <Property Name="FechaDeModificacion" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Departamento">
+    <Key>
+      <PropertyRef Name="DepartamentoId" />
+    </Key>
+    <Property Name="DepartamentoId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Departamento" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Estudiantes">
+    <Key>
+      <PropertyRef Name="EstudiantesId" />
+    </Key>
+    <Property Name="EstudiantesId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Apellido" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="CiudadId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="MunicipioId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="CarreraId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="CreadoPorUsuarioId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="ModificadoPorUsuarioId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="FechadeCreacion" Type="datetime" Nullable="false" />
+    <Property Name="FechadeModificacion" Type="datetime" Nullable="false" />
+    <Property Name="Correo" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="Telefono" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="EstadoId" Type="tinyint" Nullable="false" />
+    <Property Name="UsuarioId" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Facultad">
+    <Key>
+      <PropertyRef Name="FacultadId" />
+    </Key>
+    <Property Name="FacultadId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Facultad" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Municipio">
+    <Key>
+      <PropertyRef Name="MunicipioId" />
+    </Key>
+    <Property Name="MunicipioId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="DepartamentoId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Municipio" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Rol">
+    <Key>
+      <PropertyRef Name="RolId" />
+    </Key>
+    <Property Name="RolId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Rol" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="usuarios">
+    <Key>
+      <PropertyRef Name="UsuarioId" />
+    </Key>
+    <Property Name="UsuarioId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="NombreUsuario" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Contrasena" Type="varbinary(max)" Nullable="false" />
+    <Property Name="RolId" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Carrera_Facultad">
+    <End Role="Facultad" Type="Self.Facultad" Multiplicity="1" />
+    <End Role="Carrera" Type="Self.Carrera" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Facultad">
+        <PropertyRef Name="FacultadId" />
+      </Principal>
+      <Dependent Role="Carrera">
+        <PropertyRef Name="FacultadId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Clases_Carrera">
+    <End Role="Carrera" Type="Self.Carrera" Multiplicity="1" />
+    <End Role="Clases" Type="Self.Clases" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Carrera">
+        <PropertyRef Name="CarreraId" />
+      </Principal>
+      <Dependent Role="Clases">
+        <PropertyRef Name="CarreraId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ClasesEstudiante_Clases">
+    <End Role="Clases" Type="Self.Clases" Multiplicity="1" />
+    <End Role="ClasesEstudiante" Type="Self.ClasesEstudiante" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Clases">
+        <PropertyRef Name="ClaseId" />
+      </Principal>
+      <Dependent Role="ClasesEstudiante">
+        <PropertyRef Name="ClaseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ClasesEstudiante_Estudiantes">
+    <End Role="Estudiantes" Type="Self.Estudiantes" Multiplicity="1" />
+    <End Role="ClasesEstudiante" Type="Self.ClasesEstudiante" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Estudiantes">
+        <PropertyRef Name="EstudiantesId" />
+      </Principal>
+      <Dependent Role="ClasesEstudiante">
+        <PropertyRef Name="EstudianteId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Estudiantes_Carrera">
+    <End Role="Carrera" Type="Self.Carrera" Multiplicity="1" />
+    <End Role="Estudiantes" Type="Self.Estudiantes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Carrera">
+        <PropertyRef Name="CarreraId" />
+      </Principal>
+      <Dependent Role="Estudiantes">
+        <PropertyRef Name="CarreraId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Estudiantes_Departamento">
+    <End Role="Departamento" Type="Self.Departamento" Multiplicity="1" />
+    <End Role="Estudiantes" Type="Self.Estudiantes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Departamento">
+        <PropertyRef Name="DepartamentoId" />
+      </Principal>
+      <Dependent Role="Estudiantes">
+        <PropertyRef Name="CiudadId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Estudiantes_Municipio">
+    <End Role="Municipio" Type="Self.Municipio" Multiplicity="1" />
+    <End Role="Estudiantes" Type="Self.Estudiantes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Municipio">
+        <PropertyRef Name="MunicipioId" />
+      </Principal>
+      <Dependent Role="Estudiantes">
+        <PropertyRef Name="MunicipioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Estudiantes_usuarios">
+    <End Role="usuarios" Type="Self.usuarios" Multiplicity="1" />
+    <End Role="Estudiantes" Type="Self.Estudiantes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="usuarios">
+        <PropertyRef Name="UsuarioId" />
+      </Principal>
+      <Dependent Role="Estudiantes">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Municipio_Departamento">
+    <End Role="Departamento" Type="Self.Departamento" Multiplicity="1" />
+    <End Role="Municipio" Type="Self.Municipio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Departamento">
+        <PropertyRef Name="DepartamentoId" />
+      </Principal>
+      <Dependent Role="Municipio">
+        <PropertyRef Name="DepartamentoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_usuarios_Rol">
+    <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
+    <End Role="usuarios" Type="Self.usuarios" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rol">
+        <PropertyRef Name="RolId" />
+      </Principal>
+      <Dependent Role="usuarios">
+        <PropertyRef Name="RolId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ProyectoModelStoreContainer">
+    <EntitySet Name="Carrera" EntityType="Self.Carrera" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Clases" EntityType="Self.Clases" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ClasesEstudiante" EntityType="Self.ClasesEstudiante" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Departamento" EntityType="Self.Departamento" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Estudiantes" EntityType="Self.Estudiantes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Facultad" EntityType="Self.Facultad" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Municipio" EntityType="Self.Municipio" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="usuarios" EntityType="Self.usuarios" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Carrera_Facultad" Association="Self.FK_Carrera_Facultad">
+      <End Role="Facultad" EntitySet="Facultad" />
+      <End Role="Carrera" EntitySet="Carrera" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Clases_Carrera" Association="Self.FK_Clases_Carrera">
+      <End Role="Carrera" EntitySet="Carrera" />
+      <End Role="Clases" EntitySet="Clases" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ClasesEstudiante_Clases" Association="Self.FK_ClasesEstudiante_Clases">
+      <End Role="Clases" EntitySet="Clases" />
+      <End Role="ClasesEstudiante" EntitySet="ClasesEstudiante" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ClasesEstudiante_Estudiantes" Association="Self.FK_ClasesEstudiante_Estudiantes">
+      <End Role="Estudiantes" EntitySet="Estudiantes" />
+      <End Role="ClasesEstudiante" EntitySet="ClasesEstudiante" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Estudiantes_Carrera" Association="Self.FK_Estudiantes_Carrera">
+      <End Role="Carrera" EntitySet="Carrera" />
+      <End Role="Estudiantes" EntitySet="Estudiantes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Estudiantes_Departamento" Association="Self.FK_Estudiantes_Departamento">
+      <End Role="Departamento" EntitySet="Departamento" />
+      <End Role="Estudiantes" EntitySet="Estudiantes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Estudiantes_Municipio" Association="Self.FK_Estudiantes_Municipio">
+      <End Role="Municipio" EntitySet="Municipio" />
+      <End Role="Estudiantes" EntitySet="Estudiantes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Estudiantes_usuarios" Association="Self.FK_Estudiantes_usuarios">
+      <End Role="usuarios" EntitySet="usuarios" />
+      <End Role="Estudiantes" EntitySet="Estudiantes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Municipio_Departamento" Association="Self.FK_Municipio_Departamento">
+      <End Role="Departamento" EntitySet="Departamento" />
+      <End Role="Municipio" EntitySet="Municipio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_usuarios_Rol" Association="Self.FK_usuarios_Rol">
+      <End Role="Rol" EntitySet="Rol" />
+      <End Role="usuarios" EntitySet="usuarios" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
